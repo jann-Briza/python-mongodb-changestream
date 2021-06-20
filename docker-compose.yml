@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  mongodb:
+    image: mongo:4.4
+    container_name: changestream-mongodb
+    hostname: mongodb.test
+    networks:
+      - internal
+    ports:
+      - 27017:27017
+    volumes:
+      - db_data:/data/db
+    # creates replica set "rs0"
+    command: ["--replSet", "rs0", "--bind_ip_all"]
+    # initiates and checks status of replica set
+    healthcheck:
+      test: test $$(echo "rs.initiate().ok || rs.status().ok" | mongo --quiet) -eq 1
+      interval: 10s
+      start_period: 30s
+
+networks:
+  internal:
+    driver: bridge
+
+volumes:
+  db_data: {}
