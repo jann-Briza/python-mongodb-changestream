@@ -1,5 +1,7 @@
 # Python MongoDB Change Stream To Big Query
 
+![architecture](./images/architecture.png)
+
 This repository is a POC of using MongoDB change stream to Bigquery. Every changes in MongoDB are being streamed using Mongo Change Stream and the streamed data will be pushed in BigQuery. The tools I've used are:
 - Pymongo
 - AsyncIO
